@@ -10,19 +10,16 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'All';
 
-// SQL Query helper - Case Insensitive comparison
 function getCount($conn, $sql) {
     $res = mysqli_query($conn, $sql);
     return ($res) ? mysqli_num_rows($res) : 0;
 }
 
-// Counts fetch karein (LOWER use kiya taki pending/Pending dono count ho)
 $count_all = getCount($conn, "SELECT id FROM bookings WHERE user_id = '$user_id'");
 $count_pending = getCount($conn, "SELECT id FROM bookings WHERE user_id = '$user_id' AND LOWER(status) = 'pending'");
 $count_completed = getCount($conn, "SELECT id FROM bookings WHERE user_id = '$user_id' AND LOWER(status) = 'completed'");
 $count_cancelled = getCount($conn, "SELECT id FROM bookings WHERE user_id = '$user_id' AND LOWER(status) = 'cancelled'");
 
-// Main Query
 $sql = "SELECT * FROM bookings WHERE user_id = '$user_id'";
 if ($filter !== 'All') {
     $f = mysqli_real_escape_string($conn, strtolower($filter));
@@ -36,88 +33,149 @@ $result = mysqli_query($conn, $sql);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Bookings - MyLab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | MyLab Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
-        .sidebar { background: #fff; min-height: 100vh; border-right: 1px solid #e2e8f0; }
-        .sidebar a { display: block; padding: 12px 24px; color: #64748b; text-decoration: none; border-radius: 10px; margin: 4px 16px; font-weight: 500; }
-        .sidebar a.active { background: #eff6ff; color: #2563eb; font-weight: 600; }
-        .tab-btn { border: 1px solid #e2e8f0; background: #fff; padding: 8px 24px; border-radius: 30px; text-decoration: none; color: #64748b; font-size: 14px; margin-right: 12px; display: inline-flex; align-items: center; }
-        .tab-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-        .count-badge { background: rgba(0,0,0,0.05); border-radius: 50%; padding: 2px 8px; font-size: 11px; margin-left: 8px; font-weight: bold; }
-        .tab-btn.active .count-badge { background: rgba(255,255,255,0.2); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f3f4f6; }
+        
+        /* Sidebar Colorful Icon Styles */
+        .nav-link i { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 10px; transition: all 0.3s; }
+        .icon-bookings { background: #e0f2fe; color: #0ea5e9; }
+        .icon-address { background: #fef3c7; color: #d97706; }
+        .icon-members { background: #f0fdf4; color: #22c55e; }
+        .icon-reports { background: #fae8ff; color: #a855f7; }
+
+        .nav-link.active { background: #ffffff; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border-left: 4px solid #2563eb; }
+        .nav-link:hover:not(.active) { background: #f9fafb; transform: translateX(5px); }
+        
+        .booking-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .booking-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
-<body>
+<body class="text-slate-900">
 
 <?php include '../header.php'; ?>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 sidebar p-0 d-none d-md-block">
-            <div class="mt-4">
-                <a href="user-bookings.php" class="active"><i class="fa-solid fa-calendar-check me-3"></i> My Bookings</a>
-                <a href="profile.php"><i class="fa-solid fa-location-dot me-3"></i> My Address</a>
-                <a href="#"><i class="fa-solid fa-users me-3"></i> Manage Members</a>
-                <a href="dashboard.php"><i class="fa-solid fa-file-medical me-3"></i> My Reports</a>
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row gap-8">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-72 space-y-2">
+            <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100">
+                <nav class="space-y-1">
+                    <a href="user-bookings.php" class="nav-link active flex items-center gap-4 p-3 rounded-2xl group">
+                        <i class="fa-solid fa-calendar-check icon-bookings"></i>
+                        <span class="font-bold text-slate-700">My Bookings</span>
+                    </a>
+                    <a href="profile.php" class="nav-link flex items-center gap-4 p-3 rounded-2xl group">
+                        <i class="fa-solid fa-location-dot icon-address"></i>
+                        <span class="font-semibold text-slate-500 group-hover:text-slate-800">My Address</span>
+                    </a>
+                    <a href="#" class="nav-link flex items-center gap-4 p-3 rounded-2xl group">
+                        <i class="fa-solid fa-users icon-members"></i>
+                        <span class="font-semibold text-slate-500 group-hover:text-slate-800">Manage Members</span>
+                    </a>
+                    <a href="dashboard.php" class="nav-link flex items-center gap-4 p-3 rounded-2xl group">
+                        <i class="fa-solid fa-file-medical icon-reports"></i>
+                        <span class="font-semibold text-slate-500 group-hover:text-slate-800">My Reports</span>
+                    </a>
+                </nav>
             </div>
-        </div>
+        </aside>
 
-        <div class="col-md-9 p-4 p-md-5">
-            <h2 class="fw-bold mb-4 text-slate-800">My Bookings</h2>
-
-            <div class="flex flex-wrap gap-2 mb-8">
-                <a href="?filter=All" class="tab-btn <?php echo ($filter == 'All') ? 'active' : ''; ?>">All <span class="count-badge"><?php echo $count_all; ?></span></a>
-                <a href="?filter=Pending" class="tab-btn <?php echo ($filter == 'Pending') ? 'active' : ''; ?>">Pending <span class="count-badge"><?php echo $count_pending; ?></span></a>
-                <a href="?filter=Completed" class="tab-btn <?php echo ($filter == 'Completed') ? 'active' : ''; ?>">Completed <span class="count-badge"><?php echo $count_completed; ?></span></a>
-                <a href="?filter=Cancelled" class="tab-btn <?php echo ($filter == 'Cancelled') ? 'active' : ''; ?>">Cancelled <span class="count-badge"><?php echo $count_cancelled; ?></span></a>
+        <!-- Main Content Area -->
+        <div class="flex-1">
+            <div class="mb-8">
+                <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">Booking History</h1>
+                <p class="text-slate-500 mt-1">Manage and track your diagnostic appointments.</p>
             </div>
 
+            <!-- Modern Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-3 mb-8 bg-white p-2 rounded-2xl shadow-sm border border-slate-100 inline-flex">
+                <?php 
+                $tabs = [
+                    'All' => $count_all, 
+                    'Pending' => $count_pending, 
+                    'Completed' => $count_completed, 
+                    'Cancelled' => $count_cancelled
+                ];
+                foreach($tabs as $label => $count): 
+                    $isActive = ($filter == $label);
+                ?>
+                    <a href="?filter=<?php echo $label; ?>" 
+                       class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2
+                       <?php echo $isActive ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'text-slate-600 hover:bg-slate-50'; ?>">
+                        <?php echo $label; ?>
+                        <span class="px-2 py-0.5 rounded-md text-[11px] <?php echo $isActive ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-500'; ?>">
+                            <?php echo $count; ?>
+                        </span>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Bookings List -->
             <div class="space-y-4">
                 <?php if ($result && mysqli_num_rows($result) > 0): ?>
                     <?php while($row = mysqli_fetch_assoc($result)): 
-                        $rawStatus = strtolower(trim($row['status']));
+                        $status = strtolower(trim($row['status']));
                         
-                        // Status colors setup
-                        if($rawStatus == 'completed') {
-                            $bClass = "text-green-700 bg-green-100";
-                        } elseif($rawStatus == 'cancelled') {
-                            $bClass = "text-red-700 bg-red-100";
-                        } else {
-                            $bClass = "text-orange-700 bg-orange-100";
-                        }
+                        // Dynamic Status Styling
+                        $statusStyles = [
+                            'completed' => 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                            'cancelled' => 'bg-rose-50 text-rose-700 border-rose-100',
+                            'pending'   => 'bg-amber-50 text-amber-700 border-amber-100'
+                        ];
+                        $currentStyle = $statusStyles[$status] ?? 'bg-slate-50 text-slate-700 border-slate-100';
                     ?>
-                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex justify-between items-center">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
-                                    <i class="fa-solid fa-file-medical text-xl"></i>
+                        <div class="booking-card bg-white p-5 rounded-3xl border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-inner">
+                                    <i class="fa-solid fa-microscope text-2xl"></i>
                                 </div>
                                 <div>
-                                    <h5 class="font-bold text-slate-800 mb-1"><?php echo htmlspecialchars($row['test']); ?></h5>
-                                    <div class="flex gap-4 text-sm text-slate-500 font-medium">
-                                        <span><i class="fa-regular fa-calendar-alt me-2 text-blue-400"></i><?php echo date('d M Y', strtotime($row['created_at'])); ?></span>
-                                        <span><i class="fa-solid fa-hashtag me-2 text-blue-400"></i>ID: <?php echo $row['id']; ?></span>
+                                    <h3 class="font-bold text-lg text-slate-800 leading-none mb-2"><?php echo htmlspecialchars($row['test']); ?></h3>
+                                    <div class="flex flex-wrap gap-4 items-center">
+                                        <div class="flex items-center text-sm font-medium text-slate-500">
+                                            <i class="fa-regular fa-calendar-check mr-2 text-blue-500"></i>
+                                            <?php echo date('d M Y', strtotime($row['created_at'])); ?>
+                                        </div>
+                                        <div class="flex items-center text-sm font-bold text-slate-400">
+                                            <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[11px] mr-2 text-slate-500 uppercase">ID</span>
+                                            #<?php echo $row['id']; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-end">
-                                <span class="px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase <?php echo $bClass; ?>">
+                            
+                            <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-0 pt-4 sm:pt-0">
+                                <span class="px-4 py-2 rounded-xl text-[11px] font-black tracking-widest uppercase border <?php echo $currentStyle; ?>">
                                     <?php echo htmlspecialchars($row['status']); ?>
                                 </span>
+                                <a href="booking-details.php?id=<?php echo $row['id']; ?>" class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-colors">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </a>
                             </div>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <div class="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200">
-                        <h5 class="text-slate-800 font-bold">No bookings found for this user.</h5>
+                    <!-- Empty State Design -->
+                    <div class="text-center py-20 bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+                        <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa-solid fa-calendar-xmark text-4xl text-slate-300"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-800">No appointments found</h2>
+                        <p class="text-slate-500 mt-2 max-w-xs mx-auto">It looks like you haven't booked any tests yet. Start your health journey today!</p>
+                        <a href="../tests.php" class="inline-block mt-8 bg-blue-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Book New Test</a>
                     </div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

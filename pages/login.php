@@ -14,11 +14,12 @@ if(isset($_POST['login'])){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             header("Location: ../index.php");
+            exit();
         } else {
-            $error = "गलत पासवर्ड!";
+            $error = "Wrong password!";
         }
     } else {
-        $error = "ईमेल आईडी नहीं मिली!";
+        $error = "Email ID not found!";
     }
 }
 ?>
@@ -55,9 +56,18 @@ if(isset($_POST['login'])){
                     <input type="email" name="email" placeholder="name@example.com" required class="w-full p-3.5 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
                 </div>
 
+                <!-- Password Field with Show/Hide Button -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
-                    <input type="password" name="password" placeholder="••••••••" required class="w-full p-3.5 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <div class="relative">
+                        <input type="password" name="password" id="passwordInput" placeholder="••••••••" required 
+                               class="w-full p-3.5 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition pr-12">
+                        
+                        <!-- Toggle Icon -->
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition">
+                            <i id="eyeIcon" class="fas fa-eye text-lg"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button name="login" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95">
@@ -71,6 +81,24 @@ if(isset($_POST['login'])){
             </div>
         </div>
     </div>
+
+    <!-- JavaScript for Show/Hide Toggle -->
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('passwordInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 
 </body>
 </html>

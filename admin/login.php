@@ -3,15 +3,16 @@ session_start();
 include '../db/config.php';
 
 if(isset($_POST['login'])){
-    // Security improvement: escaping inputs
+    // Security: escaping inputs
     $user = mysqli_real_escape_string($conn, $_POST['username']);
-    $pass = md5($_POST['password']); // Note: password_hash() is recommended over md5
+    $pass = md5($_POST['password']); // Note: Database mein md5 hai to ye chalega, warna password_verify use karein.
 
     $q = mysqli_query($conn, "SELECT * FROM admin WHERE username='$user' AND password='$pass'");
 
     if(mysqli_num_rows($q) > 0){
         $_SESSION['admin'] = $user;
         header("Location:index.php");
+        exit();
     } else {
         $error = "Invalid Username or Password";
     }
@@ -24,8 +25,11 @@ if(isset($_POST['login'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | MyLab</title>
-    <!-- Google Fonts for modern look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #0d6efd;
@@ -46,42 +50,38 @@ if(isset($_POST['login'])){
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             padding: 50px 40px;
             width: 100%;
             max-width: 400px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             text-align: center;
             backdrop-filter: blur(10px);
         }
 
-        .logo-area {
-            margin-bottom: 30px;
-        }
-
+        .logo-area { margin-bottom: 25px; }
         .logo-area span {
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: -1px;
         }
 
         .login-container h2 {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 8px;
+            margin: 0 0 8px 0;
             font-size: 24px;
         }
 
         .login-container p {
             color: #636e72;
             font-size: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .input-group {
-            position: relative;
             margin-bottom: 20px;
             text-align: left;
         }
@@ -92,7 +92,12 @@ if(isset($_POST['login'])){
             font-weight: 600;
             color: #636e72;
             margin-bottom: 8px;
-            margin-left: 5px;
+            padding-left: 5px;
+        }
+
+        /* Password Wrapper for Eye Icon */
+        .password-wrapper {
+            position: relative;
         }
 
         input {
@@ -104,14 +109,35 @@ if(isset($_POST['login'])){
             box-sizing: border-box;
             transition: all 0.3s ease;
             outline: none;
+            background: #fcfcfc;
         }
 
         input:focus {
             border-color: var(--primary);
+            background: #fff;
             box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
         }
 
-        button {
+        /* Eye Icon Styling */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #b2bec3;
+            font-size: 18px;
+            transition: color 0.3s;
+            border: none;
+            background: none;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        button.login-btn {
             width: 100%;
             background: var(--primary);
             color: white;
@@ -119,39 +145,39 @@ if(isset($_POST['login'])){
             padding: 16px;
             border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            margin-top: 15px;
+            box-shadow: 0 8px 15px rgba(13, 110, 253, 0.2);
         }
 
-        button:hover {
+        button.login-btn:hover {
             background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(13, 110, 253, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px rgba(13, 110, 253, 0.3);
         }
 
         .error-msg {
             background: #fff5f5;
             color: #c0392b;
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 14px;
             margin-bottom: 20px;
-            border-left: 4px solid #c0392b;
+            border: 1px solid #feb2b2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .footer-text {
             margin-top: 30px;
-            font-size: 12px;
+            font-size: 11px;
             color: #b2bec3;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -159,14 +185,16 @@ if(isset($_POST['login'])){
 
     <div class="login-container">
         <div class="logo-area">
-            <span>MyLab<span style="color: #4facfe;">.</span></span>
+            <span>MyLab<span style="color: #4facfe;">.</span> Admin</span>
         </div>
 
-        <h2>Admin Access</h2>
-        <p>Please enter your credentials to continue.</p>
+        <h2>Welcome Back</h2>
+        <p>Enter your credentials to manage dashboard</p>
 
         <?php if(isset($error)): ?>
-            <div class="error-msg">⚠️ <?php echo $error; ?></div>
+            <div class="error-msg">
+                <i class="fa-solid fa-circle-exclamation"></i> <?php echo $error; ?>
+            </div>
         <?php endif; ?>
 
         <form method="POST">
@@ -177,14 +205,37 @@ if(isset($_POST['login'])){
 
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="••••••••" required>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    <!-- Eye Icon Toggle -->
+                    <button type="button" class="toggle-password" onclick="togglePass()">
+                        <i id="eye-icon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
             </div>
 
-            <button type="submit" name="login">Login to Dashboard</button>
+            <button type="submit" name="login" class="login-btn">Login to Dashboard</button>
         </form>
 
-        <div class="footer-text">Secure Admin Portal © 2024</div>
+        <div class="footer-text">Secure Server Access © 2026</div>
     </div>
+
+    <script>
+        function togglePass() {
+            const passInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 
 </body>
 </html>
