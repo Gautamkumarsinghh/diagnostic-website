@@ -25,8 +25,8 @@ $page_prefix = ($current_dir == 'pages') ? '' : 'pages/';
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-8 text-sm font-bold text-gray-500">
             <a href="<?php echo $path_prefix; ?>index.php" class="hover:text-blue-600 transition">Home</a>
-            <a href="#" class="hover:text-blue-600 transition">Popular Tests</a>
-            <a href="#" class="hover:text-blue-600 transition">Request Callback</a>
+            <a href="#popular" class="hover:text-blue-600 transition">Popular Tests</a>
+            <a href="#Contact" class="hover:text-blue-600 transition">Supports</a>
         </div>
 
         <!-- Right Side -->

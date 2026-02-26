@@ -31,7 +31,7 @@ margin-top:30px;
 opacity:.8
 }
 </style>
-
+<div id ="Contact">
 <div class="footer">
 
 <div class="footer-inner">
@@ -61,6 +61,7 @@ opacity:.8
 
 <small>© 2026 My Diagnostic Lab | All Rights Reserved</small>
 
+</div>
 </div>
 <!-- Is line ko check karein -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YAHAN_APNI_KEY_DAALEIN&libraries=places&callback=initMap" async defer></script>
