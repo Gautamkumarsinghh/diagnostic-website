@@ -69,19 +69,8 @@ if(isset($_GET['status'])) $msg = "Package updated successfully!";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root { --sidebar-width: 250px; --primary: #0d6efd; --bg-body: #f4f7fe; --sidebar-bg: #1e293b; --white: #ffffff; --text-muted: #64748b; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; display: flex; }
-        
-        /* Sidebar */
-        .sidebar { width: var(--sidebar-width); background: var(--sidebar-bg); height: 100vh; position: fixed; color: white; display: flex; flex-direction: column; padding: 25px 15px; box-sizing: border-box; }
-        .sidebar-brand { font-size: 20px; font-weight: 700; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
-        .nav-menu { flex-grow: 1; }
-        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #94a3b8; text-decoration: none; border-radius: 10px; margin-bottom: 8px; font-size: 14px; transition: 0.3s; }
-        .nav-link.active { background: var(--primary); color: white; }
-        .logout-btn { background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 12px; border-radius: 10px; text-decoration: none; text-align: center; font-size: 14px; border: 1px solid rgba(239, 68, 68, 0.2); }
-
-        /* Main Content */
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 35px; box-sizing: border-box; }
+        /* Sidebar Layout and core UI is managed by sidebar.php */
+        body { margin: 0; display: flex; background: #f8fafc; font-family: 'Inter', sans-serif; }
         header { margin-bottom: 25px; }
         
         /* Form Card */
@@ -120,14 +109,7 @@ if(isset($_GET['status'])) $msg = "Package updated successfully!";
 <body>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-brand"><i class="fas fa-flask" style="color:var(--primary)"></i> MyLab Admin</div>
-        <div class="nav-menu">
-            <a href="index.php" class="nav-link"><i class="fas fa-chart-line"></i> Bookings</a>
-            <a href="packages.php" class="nav-link active"><i class="fas fa-box-open"></i> Packages</a>
-        </div>
-        <a href="logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+    <?php include 'sidebar.php'; ?>
 
     <!-- Main -->
     <div class="main-content">

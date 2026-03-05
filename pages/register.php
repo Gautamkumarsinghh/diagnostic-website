@@ -10,7 +10,7 @@ if(isset($_POST['register'])){
     $cpass = $_POST['cpassword'];
 
     if($pass !== $cpass){
-        $error = "पासवर्ड मैच नहीं हुआ!"; 
+        $error = "Passwords do not match!"; 
     } else {
         $check = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
         if(mysqli_num_rows($check) > 0){
@@ -35,117 +35,183 @@ if(isset($_POST['register'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account | My Diagnostic Lab</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style> 
-        /* Page ko fix karne ke liye CSS */
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: linear-gradient(135deg, #f0f7ff 0%, #e0e7ff 100%); 
-        } 
-        .input-icon-bg { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 10px; flex-shrink: 0; }
-        
-        .icon-name { background: #e0f2fe; color: #0ea5e9; }
-        .icon-phone { background: #fef3c7; color: #d97706; }
-        .icon-mail { background: #f0fdf4; color: #22c55e; }
-        .icon-lock { background: #fae8ff; color: #a855f7; }
-
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        
-        /* Custom Scrollbar for mobile if card is too tall */
-        .glass-card::-webkit-scrollbar { width: 0px; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        .bg-pattern { background-image: radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px); background-size: 30px 30px; }
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
+<body class="flex flex-col min-h-screen overflow-x-hidden">
 
-<!-- h-screen: poori height lega | overflow-hidden: scroll band kar dega -->
-<body class="h-screen overflow-hidden flex items-center justify-center p-4">
+    <!-- Header Inclusion -->
+    <?php include '../header.php'; ?>
 
-    <!-- max-h-[95vh] aur overflow-y-auto isliye taki agar screen choti ho to sirf card scroll ho, page nahi -->
-    <div class="glass-card w-full max-w-md rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-y-auto max-h-[95vh] border border-white relative">
+    <!-- Main Content Area -->
+    <div class="flex-grow flex items-center justify-center p-6 lg:p-12 relative">
         
-        <!-- Header Section - Sticky top par rakha hai taki scroll par header dikhta rahe -->
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center text-white sticky top-0 z-10">
-            <div class="bg-white/20 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
-                <i class="fas fa-user-plus text-2xl"></i>
-            </div>
-            <h2 class="text-2xl font-extrabold tracking-tight">Create Account</h2>
-            <p class="text-blue-100 text-sm mt-1">Start your healthy life with us</p>
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 bg-slate-50">
+            <div class="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-indigo-400/20 blur-[120px]"></div>
+            <div class="absolute bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-[120px]"></div>
         </div>
 
-        <div class="p-8 pt-6">
-            <?php if(isset($error)): ?>
-                <div class="flex items-center gap-3 bg-rose-50 border border-rose-100 text-rose-600 text-xs font-bold p-3 rounded-2xl mb-6">
-                    <i class="fa-solid fa-circle-exclamation"></i> <?php echo $error; ?>
+        <div class="w-full max-w-6xl bg-white rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col lg:flex-row-reverse border border-white relative z-10">
+            
+            <!-- Right Side / Branding (Image & Gradient) -->
+            <div class="lg:w-5/12 relative overflow-hidden hidden lg:flex flex-col justify-between p-12 text-white bg-indigo-600">
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-bl from-indigo-600 via-purple-700 to-indigo-900 opacity-90 z-0"></div>
+                <div class="absolute inset-0 bg-pattern opacity-30 z-0"></div>
+                
+                <!-- Content -->
+                <div class="relative z-10">
+                    <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center backdrop-blur-md mb-8 border border-white/30 shadow-xl">
+                        <i class="fas fa-heartbeat text-3xl text-pink-200"></i>
+                    </div>
+                    <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">Start Your<br><span class="text-purple-200">Health Journey</span></h1>
+                    <p class="text-indigo-100/90 text-lg leading-relaxed mb-8 max-w-sm">Join thousands of satisfied patients. Get your diagnostic tests done from the comfort of your home with our premium services.</p>
                 </div>
-            <?php endif; ?>
-
-            <form method="post" class="space-y-5">
-                <div class="space-y-1">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Full Name</label>
-                    <div class="flex items-center gap-3">
-                        <div class="input-icon-bg icon-name"><i class="fa-solid fa-user-tag text-sm"></i></div>
-                        <input type="text" name="name" required placeholder="Name" 
-                               class="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all">
+                
+                <!-- Community Stats -->
+                <div class="relative z-10 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm tracking-wide text-white">50,000+ Patients</p>
+                            <p class="text-xs text-indigo-200 uppercase tracking-widest mt-0.5">Trust Our Services</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm tracking-wide text-white">100+ Premium Tests</p>
+                            <p class="text-xs text-indigo-200 uppercase tracking-widest mt-0.5">Comprehensive Portfolios</p>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="space-y-1">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Mobile Number</label>
-                    <div class="flex items-center gap-3">
-                        <div class="input-icon-bg icon-phone"><i class="fa-solid fa-phone-flip text-sm"></i></div>
-                        <input type="tel" name="mobile" required placeholder="+91 00000 00000" 
-                               class="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-amber-500 focus:bg-white outline-none transition-all">
+            <!-- Left Side / Form Container -->
+            <div class="lg:w-7/12 p-8 sm:p-12 lg:p-16 flex flex-col justify-center bg-white relative">
+                
+                <div class="max-w-xl w-full mx-auto relative z-10">
+                    <!-- Mobile Logo -->
+                    <div class="lg:hidden bg-indigo-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-8 border border-indigo-100 text-indigo-600 shadow-sm">
+                        <i class="fas fa-user-plus text-3xl"></i>
                     </div>
-                </div>
 
-                <div class="space-y-1">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Email Address</label>
-                    <div class="flex items-center gap-3">
-                        <div class="input-icon-bg icon-mail"><i class="fa-solid fa-envelope-open-text text-sm"></i></div>
-                        <input type="email" name="email" required placeholder="example@mail.com" 
-                               class="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none transition-all">
+                    <div class="mb-10 text-center lg:text-left">
+                        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight mb-2">Create an Account ✨</h2>
+                        <p class="text-gray-500 font-medium">Join us today to book tests and access your health reports online.</p>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Password</label>
-                        <div class="relative flex items-center gap-3">
-                            <div class="input-icon-bg icon-lock"><i class="fa-solid fa-shield-halved text-sm"></i></div>
-                            <div class="relative flex-1">
-                                <input type="password" id="password" name="password" required placeholder="••••••••" 
-                                       class="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:bg-white outline-none transition-all pr-10">
-                                <button type="button" onclick="togglePass('password', 'eye1')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-purple-600 transition">
-                                    <i id="eye1" class="fa-solid fa-eye text-xs"></i>
-                                </button>
+                    <?php if(isset($error)): ?>
+                        <div class="mb-6 bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm animate-pulse flex-row">
+                            <i class="fas fa-exclamation-circle text-red-500 text-xl"></i>
+                            <span class="text-sm font-bold"><?php echo $error; ?></span>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="post" class="space-y-6">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Name Input -->
+                            <div class="space-y-2 group">
+                                <label class="text-[11px] font-black tracking-widest text-gray-400 uppercase ml-1 group-focus-within:text-indigo-600 transition-colors">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+                                    </div>
+                                    <input type="text" name="name" placeholder="John Doe" required 
+                                           class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
+                                </div>
+                            </div>
+
+                            <!-- Mobile Input -->
+                            <div class="space-y-2 group">
+                                <label class="text-[11px] font-black tracking-widest text-gray-400 uppercase ml-1 group-focus-within:text-indigo-600 transition-colors">Phone Number</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <i class="fas fa-phone-alt text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+                                    </div>
+                                    <input type="tel" name="mobile" placeholder="+91 00000 00000" required 
+                                           class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Confirm</label>
-                        <div class="relative">
-                            <input type="password" id="cpassword" name="cpassword" required placeholder="••••••••" 
-                                   class="w-full p-3 bg-slate-50 border border-slate-100 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:bg-white outline-none transition-all pr-10">
-                            <button type="button" onclick="togglePass('cpassword', 'eye2')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-purple-600 transition">
-                                <i id="eye2" class="fa-solid fa-eye text-xs"></i>
-                            </button>
+
+                        <!-- Email Input -->
+                        <div class="space-y-2 group">
+                            <label class="text-[11px] font-black tracking-widest text-gray-400 uppercase ml-1 group-focus-within:text-indigo-600 transition-colors">Email Address</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+                                </div>
+                                <input type="email" name="email" placeholder="example@mail.com" required 
+                                       class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
+                            </div>
                         </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Password Input -->
+                            <div class="space-y-2 group">
+                                <label class="text-[11px] font-black tracking-widest text-gray-400 uppercase ml-1 group-focus-within:text-indigo-600 transition-colors">Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+                                    </div>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" required 
+                                           class="w-full pl-11 pr-11 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
+                                    <button type="button" onclick="togglePass('password', 'eye1')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-indigo-600 transition-colors focus:outline-none">
+                                        <i id="eye1" class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="space-y-2 group">
+                                <label class="text-[11px] font-black tracking-widest text-gray-400 uppercase ml-1 group-focus-within:text-indigo-600 transition-colors">Confirm Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <i class="fas fa-check-circle text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
+                                    </div>
+                                    <input type="password" id="cpassword" name="cpassword" placeholder="••••••••" required 
+                                           class="w-full pl-11 pr-11 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
+                                    <button type="button" onclick="togglePass('cpassword', 'eye2')" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-indigo-600 transition-colors focus:outline-none">
+                                        <i id="eye2" class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button name="register" type="submit" class="w-full bg-indigo-600 text-white font-bold text-lg py-4 rounded-2xl shadow-xl shadow-indigo-500/30 hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 mt-4 group">
+                            Create My Account <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </form>
+
+                    <!-- Login Link -->
+                    <div class="mt-10 text-center bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                        <p class="text-gray-500 text-sm font-medium">Already have an account? 
+                            <a href="login.php" class="text-indigo-600 font-extrabold ml-1 hover:underline decoration-2 underline-offset-4">Sign in instead</a>
+                        </p>
                     </div>
                 </div>
-
-                <button name="register" type="submit" class="w-full bg-blue-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-[1.5rem] shadow-xl shadow-blue-200 transform active:scale-[0.98] transition-all mt-6 mb-2">
-                    Create My Account
-                </button>
-            </form>
-
-            <div class="mt-4 pb-4 text-center">
-                <p class="text-slate-400 text-sm font-medium">Already have an account?</p>
-                <a href="login.php" class="text-blue-600 font-extrabold hover:text-indigo-700 transition-colors mt-1 inline-block">Sign In Instead</a>
             </div>
         </div>
     </div>
+
+    <!-- Footer Inclusion -->
+    <?php include '../footer.php'; ?>
 
     <script>
         function togglePass(inputId, iconId) {
@@ -161,6 +227,5 @@ if(isset($_POST['register'])){
             }
         }
     </script>
-
 </body>
 </html>
