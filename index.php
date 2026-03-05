@@ -113,7 +113,13 @@
 </section>
 
 <!-- POPULAR TESTS -->
+<<<<<<< HEAD
 <section id="popular-tests" class="max-w-7xl mx-auto py-24 px-6">
+=======
+
+
+<section id="popular" class="max-w-7xl mx-auto py-24 px-6 scroll-mt-24">
+>>>>>>> b311c1453f909a077d5bc7d1e66a490ee131fd11
     <div class="flex flex-col md:flex-row justify-between items-center mb-12">
         <div>
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Popular Health Packages</h2>

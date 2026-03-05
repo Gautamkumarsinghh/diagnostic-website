@@ -21,9 +21,20 @@ $page_prefix = ($current_dir == 'pages' || $current_dir == 'admin') ? '' : 'page
                 <span class="truncate max-w-[200px] sm:max-w-none">Special Offer: Flat 20% OFF on Full Body Packages!</span>
                 <span class="bg-yellow-400 text-slate-900 px-3 py-0.5 rounded-full ml-1 sm:ml-3 shadow-sm animate-pulse whitespace-nowrap hidden sm:inline-block">Use Code: HEALTH20</span>
             </div>
+<<<<<<< HEAD
             <button onclick="closeOfferBanner()" class="absolute right-4 text-white hover:text-yellow-300 transition-colors bg-white/20 hover:bg-white/30 rounded-full w-5 h-5 flex items-center justify-center">
                 <i class="fas fa-times text-[10px]"></i>
             </button>
+=======
+            <span class="text-2xl font-black text-gray-800 tracking-tighter">MyLab</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-bold text-gray-500">
+            <a href="<?php echo $path_prefix; ?>index.php" class="hover:text-blue-600 transition">Home</a>
+            <a href="#popular" class="hover:text-blue-600 transition">Popular Tests</a>
+            <a href="#Contact" class="hover:text-blue-600 transition">Supports</a>
+>>>>>>> b311c1453f909a077d5bc7d1e66a490ee131fd11
         </div>
     </div>
 
