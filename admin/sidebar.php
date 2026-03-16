@@ -181,16 +181,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fas fa-calendar-alt"></i> <span>Booking Calendar</span>
         </a>
 
-        <div class="nav-label">Business & Insights</div>
-        <a href="analytics.php" class="nav-item <?php echo ($current_page == 'analytics.php') ? 'active' : ''; ?>">
-            <i class="fas fa-chart-pie"></i> <span>Business Insights</span>
-        </a>
-        <a href="manage_inventory.php" class="nav-item <?php echo ($current_page == 'manage_inventory.php') ? 'active' : ''; ?>">
-            <i class="fas fa-boxes-stacked"></i> <span>Supply Center</span>
-        </a>
-        <a href="manage_feedback.php" class="nav-item <?php echo ($current_page == 'manage_feedback.php') ? 'active' : ''; ?>">
-            <i class="fas fa-comment-medical"></i> <span>Patient Sentiment</span>
-        </a>
 
         <div class="nav-label">Services & Media</div>
         <a href="packages.php" class="nav-item <?php echo ($current_page == 'packages.php') ? 'active' : ''; ?>">
@@ -199,9 +189,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <a href="manage_plans.php" class="nav-item <?php echo ($current_page == 'manage_plans.php') ? 'active' : ''; ?>">
             <i class="fas fa-layer-group"></i> <span>Health Plans</span>
         </a>
-        <a href="manage_banners.php" class="nav-item <?php echo ($current_page == 'manage_banners.php') ? 'active' : ''; ?>">
-            <i class="fas fa-images"></i> <span>Banners & Sliders</span>
-        </a>
+
 
         <div class="nav-label">Tools & Marketing</div>
         <a href="manage_coupons.php" class="nav-item <?php echo ($current_page == 'manage_coupons.php') ? 'active' : ''; ?>">
@@ -210,14 +198,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <a href="manage_faqs.php" class="nav-item <?php echo ($current_page == 'manage_faqs.php') ? 'active' : ''; ?>">
             <i class="fas fa-question-circle"></i> <span>FAQs Manager</span>
         </a>
-        <a href="manage_testimonials.php" class="nav-item <?php echo ($current_page == 'manage_testimonials.php') ? 'active' : ''; ?>">
-            <i class="fas fa-star"></i> <span>Testimonials</span>
-        </a>
+
         <a href="bulk_messenger.php" class="nav-item <?php echo ($current_page == 'bulk_messenger.php') ? 'active' : ''; ?>">
             <i class="fas fa-paper-plane"></i> <span>Bulk Offers</span>
         </a>
 
         <div class="nav-label">Administration</div>
+        <a href="manage_bank.php" class="nav-item <?php echo ($current_page == 'manage_bank.php') ? 'active' : ''; ?>">
+            <i class="fas fa-university"></i> <span>Bank & Payments</span>
+        </a>
         <a href="manage_staff.php" class="nav-item <?php echo ($current_page == 'manage_staff.php') ? 'active' : ''; ?>">
             <i class="fas fa-motorcycle"></i> <span>Field Operations</span>
         </a>
@@ -226,6 +215,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </a>
         <a href="users.php" class="nav-item <?php echo ($current_page == 'users.php') ? 'active' : ''; ?>">
             <i class="fas fa-user-friends"></i> <span>Patient Base</span>
+        </a>
+        <a href="manage_addresses.php" class="nav-item <?php echo ($current_page == 'manage_addresses.php') ? 'active' : ''; ?>">
+            <i class="fas fa-map-marked-alt"></i> <span>User Addresses</span>
         </a>
     </div>
 

@@ -1,0 +1,17 @@
+{
+  "name": "MyLab Diagnostic & Healthcare",
+  "short_name": "MyLab",
+  "description": "Premium Diagnostic Services at your Doorstep",
+  "start_url": "/index.php",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/images/pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

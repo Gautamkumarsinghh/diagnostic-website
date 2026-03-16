@@ -47,6 +47,9 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    <!-- Chart.js for Smart Dashboard -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f3f4f6; }
         
@@ -82,23 +85,23 @@ $result = mysqli_query($conn, $sql);
         
         <!-- Sidebar Navigation -->
         <aside class="w-full md:w-72 shrink-0">
-            <div class="bg-white rounded-[2rem] p-3 sm:p-4 shadow-sm border border-slate-100">
-                <nav class="flex md:flex-col overflow-x-auto md:overflow-x-visible gap-2 no-scrollbar px-1">
-                    <a onclick="switchTab('bookings')" id="btn-bookings" class="nav-link active flex items-center gap-3 sm:gap-4 p-3 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer">
-                        <i class="fa-solid fa-calendar-check text-blue-600"></i>
-                        <span class="font-bold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Bookings</span>
+            <div class="bg-white md:bg-white/70 md:backdrop-blur-xl rounded-[2rem] p-2 sm:p-4 shadow-sm border border-slate-100 sticky top-24 z-20">
+                <nav class="flex md:flex-col overflow-x-auto md:overflow-x-visible gap-2 no-scrollbar px-1 py-1">
+                    <a onclick="switchTab('bookings')" id="btn-bookings" class="nav-link active flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer flex-1 md:flex-none justify-center md:justify-start min-w-[140px] md:min-w-0">
+                        <i class="fa-solid fa-calendar-check text-blue-600 bg-blue-50 w-10 h-10 flex items-center justify-center rounded-xl transition-colors group-hover:bg-blue-600 group-hover:text-white"></i>
+                        <span class="font-extrabold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">My Bookings</span>
                     </a>
-                    <a onclick="switchTab('address')" id="btn-address" class="nav-link flex items-center gap-3 sm:gap-4 p-3 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer">
-                        <i class="fa-solid fa-location-dot text-slate-400"></i>
-                        <span class="font-bold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Address</span>
+                    <a onclick="switchTab('address')" id="btn-address" class="nav-link flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer flex-1 md:flex-none justify-center md:justify-start min-w-[140px] md:min-w-0">
+                        <i class="fa-solid fa-location-dot text-amber-600 bg-amber-50 w-10 h-10 flex items-center justify-center rounded-xl transition-colors group-hover:bg-amber-600 group-hover:text-white"></i>
+                        <span class="font-extrabold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Addresses</span>
                     </a>
-                    <a onclick="switchTab('members')" id="btn-members" class="nav-link flex items-center gap-3 sm:gap-4 p-3 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer">
-                        <i class="fa-solid fa-users text-slate-400"></i>
-                        <span class="font-bold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Members</span>
+                    <a onclick="switchTab('members')" id="btn-members" class="nav-link flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer flex-1 md:flex-none justify-center md:justify-start min-w-[140px] md:min-w-0">
+                        <i class="fa-solid fa-users text-emerald-600 bg-emerald-50 w-10 h-10 flex items-center justify-center rounded-xl transition-colors group-hover:bg-emerald-600 group-hover:text-white"></i>
+                        <span class="font-extrabold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Family</span>
                     </a>
-                    <a onclick="switchTab('reports')" id="btn-reports" class="nav-link flex items-center gap-3 sm:gap-4 p-3 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer">
-                        <i class="fa-solid fa-file-medical text-slate-400"></i>
-                        <span class="font-bold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Reports</span>
+                    <a onclick="switchTab('reports')" id="btn-reports" class="nav-link flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl group whitespace-nowrap md:whitespace-normal cursor-pointer flex-1 md:flex-none justify-center md:justify-start min-w-[140px] md:min-w-0">
+                        <i class="fa-solid fa-file-medical text-rose-600 bg-rose-50 w-10 h-10 flex items-center justify-center rounded-xl transition-colors group-hover:bg-rose-600 group-hover:text-white"></i>
+                        <span class="font-extrabold text-sm sm:text-base text-slate-500 group-hover:text-slate-800">Reports</span>
                     </a>
                 </nav>
             </div>
@@ -166,34 +169,34 @@ $result = mysqli_query($conn, $sql);
                             $progress_percent = (($current_idx + 1) / count($steps)) * 100;
                         ?>
                             <div class="booking-card bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm space-y-5">
-                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                                    <div class="flex items-center gap-5">
-                                        <div class="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-inner shrink-0">
-                                            <i class="fa-solid fa-microscope text-2xl"></i>
-                                        </div>
-                                        <div>
-                                            <h3 class="font-bold text-lg text-slate-800 mb-1"><?php echo htmlspecialchars($row['test']); ?></h3>
-                                            <div class="flex flex-wrap gap-4 items-center">
-                                                <div class="flex items-center text-sm font-medium text-slate-500">
-                                                    <i class="fa-regular fa-calendar-check mr-2 text-blue-500"></i>
-                                                    <?php echo date('d M Y', strtotime($row['created_at'])); ?>
-                                                </div>
-                                                <div class="flex items-center text-sm font-bold text-slate-400">
-                                                    <span class="bg-slate-100 px-2 py-0.5 rounded-md text-[11px] mr-2 text-slate-500 uppercase">ID</span>
-                                                    #<?php echo $row['id']; ?>
-                                                </div>
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                <div class="flex items-center gap-4 sm:gap-5 w-full">
+                                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-inner shrink-0">
+                                        <i class="fa-solid fa-microscope text-xl sm:text-2xl"></i>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <h3 class="font-black text-base sm:text-lg text-slate-800 mb-0.5 truncate"><?php echo htmlspecialchars($row['test']); ?></h3>
+                                        <div class="flex flex-wrap gap-x-4 gap-y-1 items-center mt-1 sm:mt-2">
+                                            <div class="flex items-center text-[11px] sm:text-sm font-bold text-slate-500">
+                                                <i class="fa-regular fa-calendar-check mr-2 text-blue-500"></i>
+                                                <?php echo date('d M Y', strtotime($row['created_at'])); ?>
+                                            </div>
+                                            <div class="flex items-center text-[10px] sm:text-sm font-black text-slate-400">
+                                                <span class="bg-slate-100 px-1.5 py-0.5 rounded text-[9px] mr-2 text-slate-500 uppercase font-black">ID</span>
+                                                #<?php echo $row['id']; ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end shrink-0">
-                                        <span class="px-4 py-2 rounded-xl text-[11px] font-black tracking-widest uppercase border <?php echo $currentStyle; ?>">
-                                            <?php echo htmlspecialchars($row['status'] ?? 'Booked'); ?>
-                                        </span>
-                                        <a href="invoice.php?id=<?php echo $row['id']; ?>" target="_blank" class="w-10 h-10 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition border border-slate-100" title="Download Invoice">
-                                            <i class="fa-solid fa-file-invoice"></i>
-                                        </a>
-                                    </div>
                                 </div>
+                                <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-50">
+                                    <span class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-[9px] sm:text-[11px] font-black tracking-widest uppercase border <?php echo $currentStyle; ?>">
+                                        <?php echo htmlspecialchars($row['status'] ?? 'Booked'); ?>
+                                    </span>
+                                    <a href="invoice.php?id=<?php echo $row['id']; ?>" target="_blank" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-blue-50 hover:text-blue-600 transition border border-slate-100" title="Download Invoice">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                    </a>
+                                </div>
+                            </div>
                                 
                                 <!-- LIVE TRACKER BAR -->
                                 <?php if($status !== 'cancelled'): ?>
@@ -262,21 +265,32 @@ $result = mysqli_query($conn, $sql);
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Sample Address Card -->
+                    <?php
+                    $addr_q = mysqli_query($conn, "SELECT * FROM user_addresses WHERE user_id = '$user_id' ORDER BY id DESC");
+                    if(mysqli_num_rows($addr_q) > 0):
+                        while($addr = mysqli_fetch_assoc($addr_q)):
+                    ?>
                     <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm booking-card">
                         <div class="flex justify-between items-start mb-4">
-                            <div class="bg-amber-50 text-amber-600 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest border border-amber-100">
-                                <i class="fa-solid fa-house mr-1"></i> Home
+                            <div class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest border border-blue-100">
+                                <i class="fa-solid fa-location-dot mr-1"></i> <?php echo htmlspecialchars($addr['title']); ?>
                             </div>
                             <div class="flex gap-2 text-slate-400">
-                                <button class="hover:text-blue-600 transition p-1"><i class="fa-solid fa-pen"></i></button>
-                                <button class="hover:text-rose-600 transition p-1"><i class="fa-solid fa-trash-can"></i></button>
+                                <button onclick="deleteAddress(<?php echo $addr['id']; ?>)" class="hover:text-rose-600 transition p-1"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </div>
-                        <h4 class="font-bold text-lg text-slate-800 mb-2">Vapi Central Apartment</h4>
-                        <p class="text-sm text-slate-500 leading-relaxed mb-4">Flat 402, B Wing, Near Medical College, Vapi, Gujarat, India - 396191</p>
-                        <p class="text-xs font-bold text-slate-400"><i class="fa-solid fa-phone mr-1"></i> +91 98765 43210</p>
+                        <h4 class="font-bold text-lg text-slate-800 mb-2"><?php echo htmlspecialchars($addr['title']); ?></h4>
+                        <p class="text-sm text-slate-500 leading-relaxed">
+                            <?php echo htmlspecialchars($addr['address_line']); ?>
+                            <?php if(!empty($addr['landmark'])) echo "<br><span class='text-xs text-slate-400 font-bold uppercase'>Landmark:</span> " . htmlspecialchars($addr['landmark']); ?>
+                            <br><span class='text-xs text-slate-400 font-bold uppercase'>Pincode:</span> <?php echo htmlspecialchars($addr['pincode']); ?>
+                        </p>
                     </div>
+                    <?php endwhile; else: ?>
+                    <div class="col-span-full text-center py-10 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
+                        <p class="text-slate-400 font-bold">No saved addresses found. Add one to get started!</p>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -378,30 +392,58 @@ $result = mysqli_query($conn, $sql);
             <button onclick="toggleMapModal(false)" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-rose-50 hover:text-rose-500 transition-colors">✕</button>
         </div>
         
-        <div class="p-6">
-            <div class="relative mb-6">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-blue-500"></i>
-                <input id="search-input" type="text" placeholder="Search area, society or landmark..." 
-                       class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl pl-12 focus:ring-4 focus:ring-blue-500/10 focus:outline-none focus:bg-white transition-all text-sm font-medium">
+        <div class="p-6 max-h-[80vh] overflow-y-auto no-scrollbar">
+            <!-- GPS & Map Section -->
+            <div class="flex gap-3 mb-4">
+                <button onclick="detectMyLocation()" class="flex-1 bg-amber-50 text-amber-600 py-3 rounded-xl font-bold text-sm border border-amber-100 flex items-center justify-center gap-2 hover:bg-amber-100">
+                    <i class="fa-solid fa-location-crosshairs"></i> Detect My Location
+                </button>
             </div>
-            
-            <div class="relative h-64 rounded-[1.5rem] overflow-hidden border border-slate-100 mb-6 shadow-inner z-[100]">
+
+            <div class="relative h-48 rounded-[1.5rem] overflow-hidden border border-slate-100 mb-4 shadow-inner">
                 <div id="map-container"></div>
-            </div>
-            
-            <div class="flex gap-5 mb-8 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-sm text-amber-500">
-                    <i class="fa-solid fa-location-dot"></i>
-                </div>
-                <div>
-                    <h4 id="display-title" class="font-bold text-slate-800">Vapi Central</h4>
-                    <p id="display-desc" class="text-xs text-slate-500 leading-relaxed mt-1">Gujarat, India - 396191</p>
+                <div class="absolute top-2 left-2 z-[500] bg-white/90 backdrop-blur px-2 py-1 rounded-md text-[10px] font-bold text-slate-500 shadow-sm border border-slate-100">
+                    <i class="fa-solid fa-hand-pointer mr-1"></i> Tap map to move pin
                 </div>
             </div>
             
-            <button onclick="saveMockAddress()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-[1.5rem] font-bold shadow-xl shadow-blue-200 transition-all active:scale-95 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-check-circle"></i> Save Address & Proceed
-            </button>
+            <!-- Manual Form -->
+            <form id="addressForm" onsubmit="event.preventDefault(); saveAddress();" class="space-y-4">
+                <input type="hidden" id="addr_lat" name="lat" value="20.3778">
+                <input type="hidden" id="addr_lng" name="lng" value="72.9038">
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Title (e.g. Home / Office)</label>
+                        <input type="text" name="title" id="addr_title" placeholder="Home / Office" required class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 outline-none text-sm font-semibold">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Address / Flat No / Street</label>
+                    <textarea name="address" id="addr_line" rows="2" placeholder="Enter complete address" required class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 outline-none text-sm font-semibold resize-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Landmark (Optional)</label>
+                        <input type="text" name="landmark" id="addr_landmark" placeholder="Near by..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 outline-none text-sm font-semibold">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Pincode</label>
+                        <input type="text" name="pincode" id="addr_pincode" placeholder="6 Digit Code" required maxlength="6" pattern="[0-9]{6}" class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 outline-none text-sm font-semibold">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 bg-blue-50 border border-blue-100 p-3 rounded-xl mb-4">
+                    <i class="fa-solid fa-circle-info text-blue-500"></i>
+                    <p class="text-[10px] font-bold text-blue-800 leading-tight">GPS Coordinates: <span id="coords-text" class="font-mono">20.3778, 72.9038</span></p>
+                </div>
+
+                <button type="submit" id="save-addr-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-[1.5rem] font-bold shadow-xl shadow-blue-200 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check-circle"></i> Save Address
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -479,7 +521,7 @@ $result = mysqli_query($conn, $sql);
 </div>
 
 <script>
-    let map;
+    let map, marker;
 
     function toggleMapModal(show) {
         const modal = document.getElementById('addressModal');
@@ -503,16 +545,101 @@ $result = mysqli_query($conn, $sql);
         if (!map) {
             map = L.map('map-container', { zoomControl: false }).setView([20.3778, 72.9038], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            L.marker([20.3778, 72.9038]).addTo(map);
+            marker = L.marker([20.3778, 72.9038], { draggable: true }).addTo(map);
             L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+            // Update coords on marker drag
+            marker.on('dragend', function(e) {
+                const latlng = marker.getLatLng();
+                updateCoords(latlng.lat, latlng.lng);
+            });
+
+            // Update marker on map click
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                updateCoords(e.latlng.lat, e.latlng.lng);
+            });
         } else { 
             setTimeout(() => map.invalidateSize(), 150); 
         }
     }
 
-    function saveMockAddress() {
-        alert('Location selected! Address added successfully.');
-        toggleMapModal(false);
+    function updateCoords(lat, lng) {
+        document.getElementById('addr_lat').value = lat;
+        document.getElementById('addr_lng').value = lng;
+        document.getElementById('coords-text').innerText = lat.toFixed(4) + ', ' + lng.toFixed(4);
+    }
+
+    function detectMyLocation() {
+        if (!navigator.geolocation) {
+            alert("Geolocation is not supported by your browser");
+            return;
+        }
+
+        const btn = event.currentTarget;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Detecting...';
+        btn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                map.setView([lat, lng], 17);
+                marker.setLatLng([lat, lng]);
+                updateCoords(lat, lng);
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            },
+            (error) => {
+                alert("Unable to retrieve your location. Check GPS settings.");
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+        );
+    }
+
+    function saveAddress() {
+        const btn = document.getElementById('save-addr-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+
+        const formData = new FormData(document.getElementById('addressForm'));
+        
+        fetch('add_address_ajax.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                location.reload();
+            } else {
+                alert(data.message);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Save Address';
+            }
+        });
+    }
+
+    function deleteAddress(id) {
+        if(!confirm('Are you sure you want to delete this address?')) return;
+        
+        const fd = new FormData();
+        fd.append('id', id);
+
+        fetch('delete_address_ajax.php', {
+            method: 'POST',
+            body: fd
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.status === 'success') {
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
     }
 
     // Member Modal Logic
@@ -600,6 +727,9 @@ $result = mysqli_query($conn, $sql);
     } else if(urlParams.has('filter')) {
         switchTab('bookings');
     }
+
+
+
 </script>
 
 </body>

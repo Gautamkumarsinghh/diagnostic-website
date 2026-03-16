@@ -13,6 +13,7 @@ if(isset($_POST['login'])){
         if(password_verify($password, $user['password'])){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_mobile'] = $user['mobile'];
             header("Location: ../index.php");
             exit();
         } else {

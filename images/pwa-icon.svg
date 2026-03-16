@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circular Background -->
+  <rect width="512" height="512" rx="120" fill="#2563EB"/>
+  
+  <!-- Microscope Icon (Stylized) -->
+  <path d="M180 380H332M180 380V356H332V380M180 380H150V410H362V380H332M256 356V140M256 140H210V180M256 140C256 140 310 140 310 200V280M310 280H260M310 280L340 310" stroke="white" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Health Plus Sign -->
+  <rect x="340" y="100" width="80" height="20" rx="4" fill="#6EE7B7"/>
+  <rect x="370" y="70" width="20" height="80" rx="4" fill="#6EE7B7"/>
+  
+  <!-- Gloss Effect -->
+  <circle cx="150" cy="150" r="80" fill="white" fill-opacity="0.1"/>
+</svg>

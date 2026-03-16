@@ -9,7 +9,9 @@ if(isset($_POST['register'])){
     $pass = $_POST['password']; 
     $cpass = $_POST['cpassword'];
 
-    if($pass !== $cpass){
+    if(!preg_match('/^[0-9]{10}$/', $mobile)){
+        $error = "Mobile number must be exactly 10 digits!";
+    } elseif($pass !== $cpass){
         $error = "Passwords do not match!"; 
     } else {
         $check = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
@@ -143,7 +145,8 @@ if(isset($_POST['register'])){
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <i class="fas fa-phone-alt text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
                                     </div>
-                                    <input type="tel" name="mobile" placeholder="+91 00000 00000" required 
+                                    <input type="tel" name="mobile" id="mobile" placeholder="10 Digit Mobile Number" required 
+                                           maxlength="10" pattern="[0-9]{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                            class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
                                 </div>
                             </div>

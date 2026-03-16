@@ -23,7 +23,7 @@
         .slide { display: none; animation: fade 1s ease-in-out; }
         @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
         
-        /* Custom Scrollbar */
+        /* Custom Scrollbar for desktop */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
@@ -32,6 +32,10 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+        /* Hide Scrollbar helper class */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; /* IE and Edge */ scrollbar-width: none; /* Firefox */ }
 
         /* Modal Animation */
         #testModal { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -47,23 +51,24 @@
 <?php include 'header.php'; ?>
 
 <!-- HERO SECTION -->
-<section class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 py-16 px-6 lg:px-20 text-white overflow-hidden">
+<section class="relative bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 py-12 sm:py-20 px-4 sm:px-10 lg:px-20 text-white overflow-hidden">
     <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
     <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/20 rounded-full -ml-20 -mb-20 blur-3xl"></div>
-    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between relative z-10 gap-10 lg:gap-0">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between relative z-10 gap-12 lg:gap-0">
         <div class="lg:w-1/2 text-center lg:text-left">
-            <span class="bg-blue-400/30 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-6 inline-block border border-white/20">
-                <i class="fas fa-check-circle mr-2"></i>NABL Accredited Laboratory
-            </span>
-            <h1 class="text-[2.2rem] sm:text-4xl lg:text-6xl font-extrabold leading-tight lg:leading-tight mb-4 sm:mb-6">Your Health, <br><span class="text-blue-200">Our Top Priority</span></h1>
-            <p class="text-xs sm:text-sm lg:text-lg mb-8 text-blue-50 opacity-90 leading-relaxed max-w-xl mx-auto lg:mx-0">Experience hassle-free diagnostic testing with home sample collection and digital reports delivered within 24 hours.</p>
+            <div class="inline-flex items-center bg-blue-400/30 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold mb-6 border border-white/20 uppercase tracking-widest mx-auto lg:ml-0">
+                <i class="fas fa-certificate text-yellow-400 mr-2"></i>NABL Accredited Laboratory
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-[1.1] mb-6 tracking-tight">Your Health, <br><span class="text-blue-200">Our Priority</span></h1>
+            <p class="text-sm sm:text-base lg:text-lg mb-10 text-blue-50 opacity-90 leading-relaxed max-w-xl mx-auto lg:mx-0">Experience hassle-free diagnostic testing with home sample collection and digital reports delivered within 24 hours.</p>
             <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                <a href="pages/login.php" class="bg-white text-blue-700 px-8 lg:px-10 py-3.5 lg:py-4 rounded-xl lg:rounded-2xl font-bold shadow-xl hover:bg-blue-50 transition transform hover:scale-105">Book a Test</a>
-                <a href="admin/login.php" class="bg-blue-800/40 backdrop-blur-md border border-white/30 text-white px-8 lg:px-10 py-3.5 lg:py-4 rounded-xl lg:rounded-2xl font-bold hover:bg-white hover:text-blue-700 transition">Admin Portal</a>
+                <a href="pages/login.php" class="bg-white text-blue-700 px-10 py-4 rounded-2xl font-black shadow-2xl hover:bg-blue-50 transition transform hover:-translate-y-1 active:translate-y-0 text-center">Book a Test</a>
+                <a href="admin/login.php" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-2xl font-black hover:bg-white/20 transition text-center">Admin Portal</a>
             </div>
         </div>
-        <div class="lg:w-1/2 flex justify-center">
-            <img src="images/yy.png" alt="Lab" class="w-full max-w-[280px] sm:max-w-md lg:max-w-lg drop-shadow-[0_35px_35px_rgba(0,0,0,0.3)] floating-animation">
+        <div class="lg:w-1/2 flex justify-center relative">
+            <div class="absolute inset-0 bg-blue-500/20 rounded-full blur-[100px] animate-pulse"></div>
+            <img src="images/yy.png" alt="Lab" class="w-full max-w-[260px] sm:max-w-md lg:max-w-lg drop-shadow-[0_35px_35px_rgba(0,0,0,0.3)] floating-animation relative z-10">
         </div>
     </div>
 </section>
@@ -113,13 +118,7 @@
 </section>
 
 <!-- POPULAR TESTS -->
-<<<<<<< HEAD
-<section id="popular-tests" class="max-w-7xl mx-auto py-24 px-6">
-=======
-
-
 <section id="popular" class="max-w-7xl mx-auto py-24 px-6 scroll-mt-24">
->>>>>>> b311c1453f909a077d5bc7d1e66a490ee131fd11
     <div class="flex flex-col md:flex-row justify-between items-center mb-12">
         <div>
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Popular Health Packages</h2>
@@ -127,7 +126,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+    <div class="flex overflow-x-auto pb-8 -mx-6 px-6 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 snap-x snap-mandatory hide-scrollbar">
     <?php
     include_once 'db/config.php';
     $q = mysqli_query($conn, "SELECT * FROM packages ORDER BY id DESC");
@@ -136,7 +135,7 @@
         // Base64 encode description for safe JS passing
         $safe_desc = base64_encode($row['description']);
     ?>
-        <div class="bg-white rounded-[2rem] overflow-hidden shadow-md border border-gray-100 card-hover flex flex-col group test-card transition-all duration-300" 
+        <div class="bg-white rounded-[2rem] overflow-hidden shadow-md border border-gray-100 card-hover flex flex-col group test-card transition-all duration-300 shrink-0 w-[85vw] sm:w-auto snap-center" 
              onclick='openModal("<?php echo addslashes($row["name"]); ?>", "<?php echo $row["price"]; ?>", "<?php echo $row["image"]; ?>", "<?php echo $safe_desc; ?>", true)'>
             <div class="relative overflow-hidden cursor-pointer">
                 <img src="images/<?php echo $row['image']; ?>" class="w-full h-48 sm:h-56 object-cover group-hover:scale-110 transition duration-500">
@@ -183,9 +182,9 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+    <div class="flex overflow-x-auto pb-10 -mx-6 px-6 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 snap-x snap-mandatory hide-scrollbar">
         <!-- Ultrasound -->
-        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 hover:-translate-y-4">
+        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 sm:hover:-translate-y-4 shrink-0 w-[80vw] sm:w-auto snap-center">
             <div class="mb-6 px-4">
                 <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">Ultrasound</h3>
                 <p class="text-slate-400 text-sm font-bold mt-1 uppercase tracking-widest">Starting @ <span class="text-slate-900 font-black">₹500</span></p>
@@ -203,7 +202,7 @@
         </div>
 
         <!-- X-Ray -->
-        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 hover:-translate-y-4">
+        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 sm:hover:-translate-y-4 shrink-0 w-[80vw] sm:w-auto snap-center">
             <div class="mb-6 px-4">
                 <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">X-Ray</h3>
                 <p class="text-slate-400 text-sm font-bold mt-1 uppercase tracking-widest">Starting @ <span class="text-slate-900 font-black">₹300</span></p>
@@ -221,7 +220,7 @@
         </div>
 
         <!-- ECG -->
-        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 hover:-translate-y-4">
+        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 sm:hover:-translate-y-4 shrink-0 w-[80vw] sm:w-auto snap-center">
             <div class="mb-6 px-4">
                 <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">ECG</h3>
                 <p class="text-slate-400 text-sm font-bold mt-1 uppercase tracking-widest">Starting @ <span class="text-slate-900 font-black">₹200</span></p>
@@ -239,7 +238,7 @@
         </div>
 
         <!-- Echocardiogram -->
-        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 hover:-translate-y-4">
+        <div class="group flex flex-col cursor-pointer transform transition-all duration-500 sm:hover:-translate-y-4 shrink-0 w-[80vw] sm:w-auto snap-center">
             <div class="mb-6 px-4">
                 <h3 class="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">Echocardiogram</h3>
                 <p class="text-slate-400 text-sm font-bold mt-1 uppercase tracking-widest">Starting @ <span class="text-slate-900 font-black">₹149</span></p>
@@ -267,104 +266,95 @@
             <h2 class="text-3xl md:text-5xl font-black leading-tight">How It Works</h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+        <div class="flex overflow-x-auto pb-10 -mx-6 px-6 sm:grid sm:grid-cols-1 md:grid-cols-4 gap-8 relative snap-x snap-mandatory hide-scrollbar">
             <div class="hidden md:block absolute top-[40px] left-[15%] w-[70%] h-0.5 bg-blue-500/20 z-0"></div>
             
-            <div class="text-center relative z-10 group">
-                <div class="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-search text-2xl"></i>
+            <div class="text-center relative z-10 group shrink-0 w-[75vw] sm:w-auto snap-center bg-white/5 sm:bg-transparent p-6 sm:p-0 rounded-3xl sm:rounded-none border border-white/10 sm:border-none">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-blue-600 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-search text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">1. Select a Test</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Choose from 500+ tests or popular health packages.</p>
+                <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">1. Select a Test</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Choose from 500+ tests or popular health packages.</p>
             </div>
             
-            <div class="text-center relative z-10 group">
-                <div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/10 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-calendar-alt text-2xl text-blue-400"></i>
+            <div class="text-center relative z-10 group shrink-0 w-[75vw] sm:w-auto snap-center bg-white/5 sm:bg-transparent p-6 sm:p-0 rounded-3xl sm:rounded-none border border-white/10 sm:border-none">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-white/10 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-calendar-alt text-xl sm:text-2xl text-blue-400"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">2. Book Slot</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Pick a date and convenient time for home collection.</p>
+                <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">2. Book Slot</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Pick a date and convenient time for home collection.</p>
             </div>
             
-            <div class="text-center relative z-10 group">
-                <div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center mx-auto mb-8 border border-white/10 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-house-user text-2xl text-blue-400"></i>
+            <div class="text-center relative z-10 group shrink-0 w-[75vw] sm:w-auto snap-center bg-white/5 sm:bg-transparent p-6 sm:p-0 rounded-3xl sm:rounded-none border border-white/10 sm:border-none">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-white/10 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-house-user text-xl sm:text-2xl text-blue-400"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">3. Sample Collection</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Our certified phlebotomist visits your home for sample.</p>
+                <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">3. Sample Collection</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Our certified phlebotomist visits your home for sample.</p>
             </div>
             
-            <div class="text-center relative z-10 group">
-                <div class="w-20 h-20 bg-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-emerald-500/20 group-hover:scale-110 transition-transform">
-                    <i class="fas fa-file-medical-alt text-2xl"></i>
+            <div class="text-center relative z-10 group shrink-0 w-[75vw] sm:w-auto snap-center bg-white/5 sm:bg-transparent p-6 sm:p-0 rounded-3xl sm:rounded-none border border-white/10 sm:border-none">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-500 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-2xl shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-file-medical-alt text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3">4. Digital Report</h3>
-                <p class="text-slate-400 text-sm leading-relaxed">Get accurate results on your WhatsApp within 24 hours.</p>
+                <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">4. Digital Report</h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Get accurate results on your WhatsApp within 24 hours.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- NEW PREMIUM SPLIT-SCREEN MODAL DESIGN -->
-<div id="testModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl opacity-0 transition-all duration-500">
-    <div class="modal-box bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative flex flex-col lg:flex-row max-h-[90vh]">
+<div id="testModal" class="fixed inset-0 z-[100] hidden flex flex-col items-center justify-end sm:justify-center p-0 lg:p-4 bg-slate-950/80 backdrop-blur-xl opacity-0 transition-all duration-500">
+    <div class="modal-box bg-white w-full max-w-5xl rounded-t-[2.5rem] lg:rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative flex flex-col lg:flex-row max-h-[90vh] lg:max-h-[85vh] mt-auto sm:mt-0">
         
         <!-- Left Side: Visuals & Quick Info (40%) -->
-        <div class="lg:w-[40%] relative flex flex-col bg-slate-900 overflow-hidden">
+        <div class="lg:w-[40%] relative flex flex-col bg-slate-900 overflow-hidden shrink-0 h-[22vh] sm:h-[30vh] lg:h-auto">
             <img id="modalImg" src="" class="absolute inset-0 w-full h-full object-cover opacity-60">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent"></div>
             
-            <div class="relative z-10 p-10 flex flex-col h-full justify-between">
+            <div class="relative z-10 p-5 sm:p-10 flex flex-col h-full justify-between">
                 <div>
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="bg-blue-600/20 backdrop-blur-md border border-white/20 text-blue-200 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">NABL ACCREDITED</span>
-                        <span class="bg-emerald-500/20 backdrop-blur-md border border-white/20 text-emerald-200 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">ISO CERTIFIED</span>
+                    <div class="flex flex-wrap gap-2 mb-3 lg:mb-6">
+                        <span class="bg-blue-600/20 backdrop-blur-md border border-white/20 text-blue-200 text-[8px] sm:text-[9px] font-black px-3 py-1 sm:px-4 sm:py-1.5 rounded-full uppercase tracking-widest">NABL ACCREDITED</span>
+                        <span class="bg-emerald-500/20 backdrop-blur-md border border-white/20 text-emerald-200 text-[9px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest hidden sm:inline-block">ISO CERTIFIED</span>
                     </div>
-                    <h2 id="modalTitle" class="text-3xl lg:text-4xl font-black text-white leading-tight mb-4"></h2>
-                    <div class="w-20 h-1.5 bg-blue-500 rounded-full"></div>
+                    <h2 id="modalTitle" class="text-xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-2 lg:mb-4"></h2>
+                    <div class="w-16 lg:w-20 h-1.5 bg-blue-500 rounded-full hidden sm:block"></div>
                 </div>
 
-                <div class="space-y-6">
-                    <div class="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-[2rem]">
-                        <p class="text-[10px] text-blue-300 font-extrabold uppercase tracking-[0.2em] mb-3">Package Fee</p>
+                <div class="space-y-4 lg:space-y-6 hidden sm:block">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 lg:p-6 rounded-[2rem]">
+                        <p class="text-[10px] text-blue-300 font-extrabold uppercase tracking-[0.2em] mb-2 lg:mb-3">Package Fee</p>
                         <div class="flex items-end gap-2">
-                            <span id="modalPrice" class="text-4xl lg:text-5xl font-black text-white"></span>
-                            <span class="text-white/50 text-xs mb-2">All Inclusive</span>
+                            <span id="modalPrice" class="text-3xl lg:text-5xl font-black text-white"></span>
+                            <span class="text-white/50 text-[10px] lg:text-xs mb-1.5 lg:mb-2">All Inclusive</span>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-3">
-                            <div class="text-blue-400"><i class="fas fa-clock"></i></div>
-                            <div>
-                                <p class="text-[8px] text-white/50 font-bold uppercase tracking-widest">Reports</p>
-                                <p class="text-[10px] text-white font-bold">In 24 Hours</p>
-                            </div>
-                        </div>
-                        <div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-3">
-                            <div class="text-emerald-400"><i class="fas fa-microscope"></i></div>
-                            <div>
-                                <p class="text-[8px] text-white/50 font-bold uppercase tracking-widest">Method</p>
-                                <p class="text-[10px] text-white font-bold">Bio-Tech AI</p>
-                            </div>
-                        </div>
+                </div>
+                
+                <!-- Mobile only price -->
+                <div class="sm:hidden flex justify-between items-end">
+                    <div>
+                        <p class="text-[8px] text-blue-300 font-extrabold uppercase tracking-[0.2em]">Package Fee</p>
+                        <span id="modalPriceMobile" class="text-2xl font-black text-white leading-none"></span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Right Side: Extensive Details (60%) -->
-        <div class="lg:w-[60%] flex flex-col bg-white relative">
+        <div class="lg:w-[60%] flex flex-col bg-white relative h-[62vh] lg:h-auto border-t lg:border-t-0 border-slate-100">
             <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-30 bg-slate-50 hover:bg-red-500 w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all group">
-                <i class="fas fa-times group-hover:rotate-90 transition-transform"></i>
+            <button onclick="closeModal()" class="absolute -top-3 right-4 lg:top-6 lg:right-6 z-30 bg-white hover:bg-red-500 w-8 h-8 lg:w-10 lg:h-10 rounded-full lg:rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all shadow-md lg:shadow-none group border border-slate-100 lg:bg-slate-50 transform -translate-y-1/2 lg:translate-y-0">
+                <i class="fas fa-times group-hover:rotate-90 transition-transform text-xs lg:text-base"></i>
             </button>
 
             <!-- Main Content Area -->
-            <div class="flex-grow overflow-y-auto p-8 lg:p-12 custom-scrollbar">
-                <div class="mb-10">
-                    <h4 class="text-slate-900 font-black text-xs uppercase tracking-[0.3em] mb-8 flex items-center gap-4">
-                        <span class="w-10 h-1 bg-blue-600 rounded-full"></span>
+            <div class="flex-grow overflow-y-auto p-6 lg:p-12 custom-scrollbar">
+                <div class="mb-8 lg:mb-10">
+                    <h4 class="text-slate-900 font-black text-[10px] lg:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-6 sm:mb-8 flex items-center gap-3 sm:gap-4">
+                        <span class="w-6 sm:w-10 h-1 bg-blue-600 rounded-full"></span>
                         DETAILED TEST COVERAGE
                     </h4>
                     
@@ -396,21 +386,21 @@
             </div>
 
             <!-- Enhanced Action Footer -->
-            <div class="p-8 lg:px-12 lg:py-10 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-8 shrink-0">
+            <div class="p-4 sm:p-6 lg:px-12 lg:py-8 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-4 lg:gap-8 shrink-0 shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
                 <div class="hidden sm:block">
                     <div class="flex items-center gap-2 mb-1">
-                        <i class="fas fa-bolt text-yellow-500 text-xs"></i>
-                        <p class="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">Limited Time Offer</p>
+                        <i class="fas fa-bolt text-yellow-500 text-[10px] lg:text-xs"></i>
+                        <p class="text-[8px] lg:text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">Limited Time Offer</p>
                     </div>
-                    <p class="text-sm font-black text-slate-800">Extra 10% Off Applied</p>
+                    <p class="text-xs lg:text-sm font-black text-slate-800">Extra 10% Off Applied</p>
                 </div>
                 
-                <div class="flex flex-grow lg:flex-grow-0 items-center gap-4">
-                    <button onclick="closeModal()" class="px-8 py-5 border border-slate-200 text-slate-500 rounded-2xl font-bold text-sm hover:bg-white transition-all hidden md:block">
+                <div class="flex flex-grow lg:flex-grow-0 items-center justify-end gap-3 lg:gap-4 w-full sm:w-auto">
+                    <button onclick="closeModal()" class="px-6 py-4 border border-slate-200 text-slate-500 rounded-2xl font-bold text-xs lg:text-sm hover:bg-white transition-all hidden md:block">
                         Go Back
                     </button>
-                    <button id="bookNowBtn" class="flex-grow md:min-w-[240px] bg-slate-950 text-white text-center py-5 lg:py-6 rounded-3xl font-black text-md lg:text-lg shadow-2xl hover:bg-blue-600 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-4">
-                        Add to Cart <i class="fas fa-shopping-cart text-xs"></i>
+                    <button id="bookNowBtn" class="w-full sm:w-auto flex-grow md:min-w-[240px] bg-slate-950 text-white text-center py-4 lg:py-5 rounded-2xl lg:rounded-3xl font-black text-sm lg:text-lg shadow-xl hover:bg-blue-600 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center gap-3">
+                        Add to Cart <i class="fas fa-shopping-cart text-xs lg:text-sm"></i>
                     </button>
                 </div>
             </div>
@@ -425,16 +415,16 @@
         <p class="text-gray-500 text-lg">Compare our popular packages and find the best one for you.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 rounded-[3rem] overflow-hidden border border-gray-200 shadow-2xl">
+    <div class="flex overflow-x-auto pb-8 -mx-6 px-6 sm:grid sm:grid-cols-1 md:grid-cols-3 gap-6 sm:gap-0 sm:rounded-[3rem] overflow-hidden sm:border border-gray-200 sm:shadow-2xl snap-x snap-mandatory hide-scrollbar">
         <?php
         $plans_res = mysqli_query($conn, "SELECT * FROM plans ORDER BY id ASC");
         while($p = mysqli_fetch_assoc($plans_res)):
             $features_list = explode(',', $p['features']);
             $is_pop = $p['is_popular'];
         ?>
-        <div class="<?php echo $is_pop ? 'bg-blue-50 relative' : 'bg-white border-r border-gray-100'; ?> p-10">
+        <div class="<?php echo $is_pop ? 'bg-blue-50 relative border-2 border-blue-500 rounded-[2rem] sm:rounded-none sm:border-0 sm:border-r border-gray-100' : 'bg-white border sm:border-0 border-gray-200 rounded-[2rem] sm:rounded-none sm:border-r border-gray-100'; ?> p-8 sm:p-10 shrink-0 w-[85vw] sm:w-auto snap-center">
             <?php if($is_pop): ?>
-                <div class="absolute top-0 right-10 bg-blue-600 text-white px-4 py-1 rounded-b-xl text-xs font-bold uppercase tracking-widest">Most Popular</div>
+                <div class="absolute top-0 right-8 sm:right-10 bg-blue-600 text-white px-4 py-1 rounded-b-xl text-[10px] sm:text-xs font-bold uppercase tracking-widest">Most Popular</div>
             <?php endif; ?>
             
             <h3 class="text-xl font-bold text-gray-900 mb-4"><?php echo $p['name']; ?></h3>
@@ -529,13 +519,13 @@
         <div class="w-24 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 relative z-10">
+    <div class="flex overflow-x-auto pb-10 -mx-6 px-6 sm:grid sm:grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 relative z-10 snap-x snap-mandatory hide-scrollbar">
         <!-- Review 1 -->
-        <div class="bg-white p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group hover:-translate-y-2 transition-all duration-500">
-            <div class="absolute -top-6 left-10 w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-                <i class="fas fa-quote-left"></i>
+        <div class="bg-white p-8 sm:p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group sm:hover:-translate-y-2 transition-all duration-500 shrink-0 w-[85vw] sm:w-auto snap-center">
+            <div class="absolute -top-5 sm:-top-6 left-8 sm:left-10 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <i class="fas fa-quote-left text-sm sm:text-base"></i>
             </div>
-            <div class="flex gap-1 text-yellow-400 mb-6 mt-4">
+            <div class="flex gap-1 text-yellow-400 mb-4 sm:mb-6 mt-4">
                 <i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i>
             </div>
             <p class="text-gray-600 leading-relaxed mb-10 font-medium italic">"Very fast home collection. The person was professional and I got my reports on WhatsApp within 12 hours. Highly recommended!"</p>
@@ -549,11 +539,11 @@
         </div>
 
         <!-- Review 2 -->
-        <div class="bg-white p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group hover:-translate-y-2 transition-all duration-500">
-            <div class="absolute -top-6 left-10 w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-                <i class="fas fa-quote-left"></i>
+        <div class="bg-white p-8 sm:p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group sm:hover:-translate-y-2 transition-all duration-500 shrink-0 w-[85vw] sm:w-auto snap-center">
+            <div class="absolute -top-5 sm:-top-6 left-8 sm:left-10 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <i class="fas fa-quote-left text-sm sm:text-base"></i>
             </div>
-            <div class="flex gap-1 text-yellow-400 mb-6 mt-4">
+            <div class="flex gap-1 text-yellow-400 mb-4 sm:mb-6 mt-4">
                 <i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i>
             </div>
             <p class="text-gray-600 leading-relaxed mb-10 font-medium italic">"Their Full Body Checkup package is very affordable compared to other labs. The portal is also very easy to use for reports."</p>
@@ -567,11 +557,11 @@
         </div>
 
         <!-- Review 3 -->
-        <div class="bg-white p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group hover:-translate-y-2 transition-all duration-500">
-            <div class="absolute -top-6 left-10 w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
-                <i class="fas fa-quote-left"></i>
+        <div class="bg-white p-8 sm:p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 border border-gray-100 relative group sm:hover:-translate-y-2 transition-all duration-500 shrink-0 w-[85vw] sm:w-auto snap-center">
+            <div class="absolute -top-5 sm:-top-6 left-8 sm:left-10 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <i class="fas fa-quote-left text-sm sm:text-base"></i>
             </div>
-            <div class="flex gap-1 text-yellow-400 mb-6 mt-4">
+            <div class="flex gap-1 text-yellow-400 mb-4 sm:mb-6 mt-4">
                 <i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i><i class="fas fa-star text-sm"></i>
             </div>
             <p class="text-gray-600 leading-relaxed mb-10 font-medium italic">"Impressive service! The AI symptoms search really helped me find the right test for my constant fatigue."</p>
@@ -597,6 +587,9 @@
         
         document.getElementById('modalTitle').innerText = name;
         document.getElementById('modalPrice').innerText = '₹' + price;
+        const mobilePriceEl = document.getElementById('modalPriceMobile');
+        if(mobilePriceEl) { mobilePriceEl.innerText = '₹' + price; }
+        
         document.getElementById('modalImg').src = 'images/' + image;
         
         // Decode if base64 encoded

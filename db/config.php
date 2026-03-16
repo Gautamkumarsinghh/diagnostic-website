@@ -1,7 +1,6 @@
 <?php
-$conn = mysqli_connect("localhost","root","","diagnostic");
+$conn = mysqli_connect("localhost", "root", "", "diagnostic");
 
-if(!$conn){
-die("DB not connected");
+if (!$conn) {    die("DB not connected");
 }
 ?>
