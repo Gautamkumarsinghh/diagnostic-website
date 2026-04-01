@@ -133,7 +133,7 @@ if(isset($_POST['register'])){
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                         <i class="fas fa-user text-gray-400 group-focus-within:text-indigo-600 transition-colors"></i>
                                     </div>
-                                    <input type="text" name="name" placeholder="John Doe" required 
+                                    <input type="text" name="name" placeholder="Name" required 
                                            class="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white outline-none transition-all font-medium text-gray-800 placeholder-gray-400">
                                 </div>
                             </div>
